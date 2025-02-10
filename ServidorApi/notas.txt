@@ -1,0 +1,29 @@
+src/
+│
+├── components/              # Componentes reutilizables
+│   ├── LoginForm/           # Componente del formulario de inicio de sesión
+│   │   ├── LoginForm.jsx    # Lógica y estructura del formulario
+│   │   └── LoginForm.css    # Estilos del formulario (opcional)
+│   └── ...                  # Otros componentes reutilizables
+│
+├── pages/                   # Páginas de la aplicación
+│   ├── LoginPage/           # Página de inicio de sesión
+│   │   ├── LoginPage.jsx    # Lógica y estructura de la página de inicio de sesión
+│   │   └── LoginPage.css    # Estilos de la página de inicio de sesión (opcional)
+│   └── ...                  # Otras páginas (Home, Dashboard, etc.)
+│
+├── services/                # Servicios para manejar la lógica de negocio (API calls, etc.)
+│   ├── authService.js       # Servicio para manejar la autenticación (login, logout, etc.)
+│   └── ...                  # Otros servicios
+│
+├── utils/                   # Utilidades y helpers
+│   ├── validation.js        # Funciones de validación (ej: validación de formulario)
+│   └── ...                  # Otras utilidades
+│
+├── context/                 # Contextos de React (opcional, para manejar estado global)
+│   ├── AuthContext.js       # Contexto para manejar la autenticación
+│   └── ...                  # Otros contextos
+│
+├── App.jsx                  # Componente principal de la aplicación
+├── main.jsx                 # Punto de entrada de la aplicación (renderiza App)
+└── index.css                # Estilos globales (opcional)
