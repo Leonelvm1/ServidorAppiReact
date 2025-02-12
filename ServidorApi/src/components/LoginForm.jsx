@@ -1,88 +1,49 @@
-import React, { useSate } from "react";
-import { buscarUsuario } from "../services/serviciosUsuario";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
     const [usuario, setUsuario] = useState("");
-    const [contraseña, setContraseña] = useState("");
-    const navigate = useNavigate(); // hook para la redireccion
+    const [contrasena, setContrasena] = useState("");
 
-    const handleLogin = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         // Validar campos vacíos
         if (!usuario || !contrasena) {
-            Swal.fire({
-                title: "¡Error!",
-                text: "Por favor completa todos los campos.",
-                icon: "warning",
-                confirmButtonText: "Aceptar",
-            });
+            alert("Por favor completa todos los campos."); // Puedes reemplazar esto con Swal.fire si lo prefieres
             return;
         }
 
-        try {
-            const usuarios = await buscarUsuario();
-            const usuarioEncontrado = usuarios.find(
-                (user) =>
-                    user.nombres === usuario && user.contrasena === contrasena
-            );
-
-            if (usuarioEncontrado) {
-                Swal.fire({
-                    title: "¡Inicio de sesión exitoso!",
-                    text: "Redirigiendo a la página de formularios...",
-                    icon: "success",
-                    confirmButtonText: "Aceptar",
-                }).then(() => {
-                    navigate("/forms"); // Redirige a la página de formularios
-                });
-            } else {
-                Swal.fire({
-                    title: "¡Error!",
-                    text: "Usuario o contraseña incorrectos.",
-                    icon: "error",
-                    confirmButtonText: "Aceptar",
-                });
-            }
-        } catch (error) {
-            console.error("Error al buscar usuario:", error);
-            Swal.fire({
-                title: "¡Error!",
-                text: "Hubo un problema al iniciar sesión.",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-            });
-        }
+        // Llamar a la función onLogin pasada desde el padre
+        onLogin({ usuario, contrasena });
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <div className="form-group">
-                <label>Usuario</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    value={usuario}
-                    onChange={(e) => setUsuario(e.target.value)}
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label>Contraseña</label>
-                <input
-                    type="password"
-                    className="form-control"
-                    value={contrasena}
-                    onChange={(e) => setContrasena(e.target.value)}
-                    required
-                />
-            </div>
-            <button type="submit" className="btn btn-success">
-                Iniciar Sesión
-            </button>
-        </form>
+        <div className="form-container">
+            <h2 className="text-center">Iniciar Sesión</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Usuario</label>
+                    <input
+                        type="text"
+                        value={usuario}
+                        onChange={(e) => setUsuario(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Contraseña</label>
+                    <input
+                        type="password"
+                        value={contrasena}
+                        onChange={(e) => setContrasena(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit" className="btn btn-success">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
     );
 };
 
